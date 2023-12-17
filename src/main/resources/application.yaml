@@ -1,0 +1,27 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: tech-challenge-product
+  data:
+    mongodb:
+      authentication-database: admin
+      host: localhost
+      port: 27017
+      database: tech-challenge-orders
+      username: root
+      password: example
+
+
+  kafka:
+    bootstrap-servers: localhost:9092
+api:
+  products:
+    url: localhost:8082
+    path: api/v1/products/find
+  customers:
+    url: localhost:8080
+    path: api/v1/customers/find
+kafka:
+  topic:
+    orders: tech.orders
