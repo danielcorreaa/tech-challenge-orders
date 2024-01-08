@@ -1,12 +1,9 @@
 package com.techchallenge.infrastructure.persistence.mapper;
 
 import com.techchallenge.domain.entity.Order;
-import com.techchallenge.domain.valueobject.Customer;
-import com.techchallenge.domain.valueobject.Product;
 import com.techchallenge.infrastructure.persistence.document.OrderDocument;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,14 +23,14 @@ public class OrderEntityMapper {
 		return OrderDocument.builder()
 				.dateOrderInit(order.getInitOrder())
 				.statusOrder(order.getStatusOrderString())
-				.products(order.getProcuts())
+				.products(order.getProducts())
 				.customer(order.getCustomer())
 				.dateOrdernFinish(order.getFinishOrder())
 				.build();
 	}
 
 	public Order toOrder(OrderDocument document) {
-		return Order.convert(document.getCustomer(),document.getProducts(),
+		return Order.convert(document.getId(), document.getCustomer(),document.getProducts(),
 				document.getDateOrderInit(), document.getDateOrdernFinish(), document.getStatusOrder() );
 	}
 

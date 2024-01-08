@@ -37,9 +37,9 @@ public class OrderUseCaseInteractor implements OrderUseCase {
 				.orElseThrow(() -> new NotFoundException("Any product found!"));
 
 		Order order = new Order().startOrder(customer.orElse(null), products);
+		order = crderGateway.insert(order);
 		messageGateway.send(order);
-
-		return crderGateway.insert(order);
+		return order;
 	}
 
 	public List<Order> findAll(int page, int size, List<String> sort) {

@@ -59,9 +59,9 @@ public class Order {
 		return this;
 	}
 	
-	public static final Order convert( Customer customer, List<Product> procuts, LocalDateTime dateOrderInit,
+	public static final Order convert(String id, Customer customer, List<Product> procuts, LocalDateTime dateOrderInit,
 			LocalDateTime dateOrdernFinish, String statusOrder) {		
-		return new Order(null, customer, procuts, dateOrderInit, dateOrdernFinish, statusOrder);
+		return new Order(id, customer, procuts, dateOrderInit, dateOrdernFinish, statusOrder);
 	}
 
 	public String getId() {
@@ -72,7 +72,7 @@ public class Order {
 		return customer;
 	}
 
-	public List<Product> getProcuts() {
+	public List<Product> getProducts() {
 		return products;
 	}
 

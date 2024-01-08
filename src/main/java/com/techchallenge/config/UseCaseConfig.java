@@ -8,12 +8,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class UseCaseConfig {
-	
 
 	@Bean
 	public OrderUseCase orderUseCase(OrderGateway orderGateway, CustomerGateway customerGateway,
-			ProductGateway productGateway) {
-		return new OrderUseCaseInteractor(orderGateway, customerGateway, productGateway);
+			ProductGateway productGateway,  MessageGateway messageGateway) {
+		return new OrderUseCaseInteractor(orderGateway, customerGateway, productGateway, messageGateway);
 	}
 
 	
