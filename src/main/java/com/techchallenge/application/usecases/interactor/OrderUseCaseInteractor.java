@@ -1,11 +1,11 @@
 package com.techchallenge.application.usecases.interactor;
 
 import com.techchallenge.application.gateways.CustomerGateway;
-import com.techchallenge.application.gateways.MessageGateway;
 import com.techchallenge.application.gateways.OrderGateway;
 import com.techchallenge.application.gateways.ProductGateway;
 import com.techchallenge.application.usecases.OrderUseCase;
 import com.techchallenge.core.exceptions.NotFoundException;
+import com.techchallenge.core.response.Result;
 import com.techchallenge.domain.entity.Order;
 import com.techchallenge.domain.valueobject.Customer;
 import com.techchallenge.domain.valueobject.Product;
@@ -16,53 +16,58 @@ import java.util.Optional;
 
 public class OrderUseCaseInteractor implements OrderUseCase {
 
-	private OrderGateway crderGateway;
+	private OrderGateway orderGateway;
 	private CustomerGateway customerGateway;
 	private ProductGateway productGateway;
-	private MessageGateway messageGateway;
 
-	public OrderUseCaseInteractor(OrderGateway crderGateway, CustomerGateway customerGateway,
-                                  ProductGateway productGateway, MessageGateway messageGateway) {
+	public OrderUseCaseInteractor(OrderGateway orderGateway, CustomerGateway customerGateway,
+                                  ProductGateway productGateway) {
 		super();
-		this.crderGateway = crderGateway;
+		this.orderGateway = orderGateway;
 		this.customerGateway = customerGateway;
 		this.productGateway = productGateway;
-		this.messageGateway = messageGateway;
 	}
 
 	public Order insert(String cpf, List<String> productsId) {
-		Optional<Customer> customer = customerGateway.findByCpf(cpf);
-
+		Customer customer = null;
+		if(iaNotNullOrEmpty(cpf)){
+			 customer = customerGateway.findByCpf(cpf)
+					 .orElseThrow(() -> new NotFoundException("Customer not found for cpf: "+cpf));
+		}
 		List<Product> products = productGateway.findByIds(productsId)
 				.orElseThrow(() -> new NotFoundException("Any product found!"));
 
-		Order order = new Order().startOrder(customer.orElse(null), products);
-		order = crderGateway.insert(order);
-		messageGateway.send(order);
+		Order order = new Order().startOrder(customer, products);
+		order = orderGateway.insert(order);
 		return order;
 	}
 
-	public List<Order> findAll(int page, int size, List<String> sort) {
-		return crderGateway.findAll(page, size, sort).orElseThrow(() -> new NotFoundException("Order not found"));
-	}
-	
-	public Order ready(String id) {
-		Order order = findById(id);
-		return crderGateway.insert(order.ready());
+	private Boolean iaNotNullOrEmpty(String cpf) {
+		return !Optional.ofNullable(cpf).orElse("").isEmpty();
 	}
 
-	public Order finish(String id) {
-		Order order = findById(id);
-		return crderGateway.insert(order.finishOrder(id));
+	public Result<List<Order>> findAll(int page, int size) {
+		return orderGateway.findAll(page, size);
+	}
+
+
+	@Override
+	public List<Order> findOrdersNotSent() {
+		return orderGateway.findOrdersNotSent();
+	}
+
+	@Override
+	public void update(Order order) {
+		orderGateway.update(order);
 	}
 
 	public Order findById(String id) {
-		return crderGateway.findbyId(id).orElseThrow(() -> new NotFoundException("Order not found!"));
+		return orderGateway.findbyId(id).orElseThrow(() -> new NotFoundException("Order not found!"));
 	}
 
 	@Override
 	public List<Order> findAllByStatusAndDate() {
-		return crderGateway.findByStatusAndDate();
+		return orderGateway.findByStatusAndDate();
 	}
 
 }

@@ -3,7 +3,7 @@ package com.techchallenge.domain.entity;
 import com.techchallenge.domain.enums.StatusOrder;
 import com.techchallenge.domain.valueobject.Customer;
 import com.techchallenge.domain.valueobject.Product;
-import com.techchallenge.domain.valueobject.Status;
+import org.bson.types.ObjectId;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -18,50 +18,44 @@ public class Order {
 	private LocalDateTime dateOrderInit;
 	private LocalDateTime dateOrderFinish;
 	private Long minutesDurationOrder;
-	private StatusOrder statusOrder;	
+	private StatusOrder statusOrder;
+	private Boolean sent;
 
 	public Order() {
 		super();
 	}
 	private Order(String id, Customer customer, List<Product> products, LocalDateTime dateOrderInit,
-                  LocalDateTime dateOrdernFinish, String statusOrder) {
+                  LocalDateTime dateOrdernFinish, String statusOrder, Boolean sent) {
 		this.id = id;
 		this.customer = customer;
 		this.products = products;
 		this.dateOrderInit = dateOrderInit;
 		this.dateOrderFinish = dateOrdernFinish;
 		this.statusOrder = StatusOrder.getByName(statusOrder);
-
+		this.sent = sent;
 	}
 	
-	public Order startOrder(Customer customer, List<Product> procuts) {		
+	public Order startOrder(Customer customer, List<Product> procuts) {
+		this.id = new ObjectId().toString();
 		this.customer = customer;
 		this.products = procuts;
 		this.dateOrderInit = LocalDateTime.now();		
-		this.statusOrder = Status.received(this);
+		this.statusOrder = StatusOrder.RECEBIDO;
+		this.sent = Boolean.FALSE;
 		return this;
 	}
 	
-	public Order sendToPreparation() {
-		this.statusOrder = Status.preparation(this);
-		return this;
-	}
-	
-	public Order ready() {
-		this.statusOrder = Status.ready(this);
+	public Order changeStatus(String status) {
+		this.statusOrder = StatusOrder.getByName(status);
+		if("FINALIZADO".equals(status)){
+			this.dateOrderFinish = LocalDateTime.now();
+		}
 		return this;
 	}
 
-	public Order finishOrder(String id) {
-		this.id = id;
-		this.dateOrderFinish = LocalDateTime.now();
-		this.statusOrder = Status.finalize(this);
-		return this;
-	}
-	
-	public static final Order convert(String id, Customer customer, List<Product> procuts, LocalDateTime dateOrderInit,
-			LocalDateTime dateOrdernFinish, String statusOrder) {		
-		return new Order(id, customer, procuts, dateOrderInit, dateOrdernFinish, statusOrder);
+	public static final Order convert(String id, Customer customer, List<Product> products, LocalDateTime dateOrderInit,
+			LocalDateTime dateOrdernFinish, String statusOrder, Boolean sent) {
+		return new Order(id, customer, products, dateOrderInit, dateOrdernFinish, statusOrder, sent);
 	}
 
 	public String getId() {
@@ -93,12 +87,28 @@ public class Order {
 		return minutesDurationOrder;
 	}
 
+	public LocalDateTime getDateOrderInit() {
+		return dateOrderInit;
+	}
+
+	public LocalDateTime getDateOrderFinish() {
+		return dateOrderFinish;
+	}
+
 	public Optional<StatusOrder> getStatusOrder() {
 		return Optional.ofNullable(statusOrder);
 	}
-	
+
 	public String getStatusOrderString() {
 		return getStatusOrder().map( order -> order.toString()).orElse("");
 	}
 
+	public Boolean getSent() {
+		return sent;
+	}
+
+	public Order toSend() {
+		this.sent = Boolean.TRUE;
+		return this;
+	}
 }

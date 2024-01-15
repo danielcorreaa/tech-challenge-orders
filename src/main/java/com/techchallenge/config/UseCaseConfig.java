@@ -11,8 +11,8 @@ public class UseCaseConfig {
 
 	@Bean
 	public OrderUseCase orderUseCase(OrderGateway orderGateway, CustomerGateway customerGateway,
-			ProductGateway productGateway,  MessageGateway messageGateway) {
-		return new OrderUseCaseInteractor(orderGateway, customerGateway, productGateway, messageGateway);
+			ProductGateway productGateway) {
+		return new OrderUseCaseInteractor(orderGateway, customerGateway, productGateway);
 	}
 
 	

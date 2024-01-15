@@ -32,7 +32,7 @@ public class OrderMapper {
 	}
 
 	public ProductResponse toProductResponse(Product product) {
-		return new ProductResponse(product.getId(), product.getTitle(), product.getCategory().toString(),
+		return new ProductResponse(product.getSku(), product.getTitle(), product.getCategory().toString(),
 				product.getDescription(), product.getPrice(), product.getImage());
 	}
 

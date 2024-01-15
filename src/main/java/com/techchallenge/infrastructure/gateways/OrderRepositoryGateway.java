@@ -1,15 +1,20 @@
 package com.techchallenge.infrastructure.gateways;
 
 import com.techchallenge.application.gateways.OrderGateway;
+import com.techchallenge.core.response.Result;
 import com.techchallenge.domain.entity.Order;
 import com.techchallenge.infrastructure.persistence.document.OrderDocument;
 import com.techchallenge.infrastructure.persistence.mapper.OrderEntityMapper;
 import com.techchallenge.infrastructure.persistence.repository.OrderRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Component
 public class OrderRepositoryGateway implements OrderGateway {
@@ -31,17 +36,17 @@ public class OrderRepositoryGateway implements OrderGateway {
 	}
 
 	@Override
-	public Optional<List<Order>> findAll(int page, int size, List<String> sort) {		
-		Pageable pageable = Pageable.ofSize(size).withPage(page);
-		var allOrders = repository.findAllOrderByDateOrderInit(pageable);		
-		var allOrderByDate = Optional.ofNullable(allOrders.getContent());
-		return allOrderByDate.map(all -> mapper.toOrderList(all));
+	public Result<List<Order>> findAll(int page, int size) {
+		Sort sort = Sort.by(Sort.Direction.ASC, "dateOrderInit");
+		Pageable pageable = PageRequest.of(page, size, sort);
+		Page<OrderDocument> result = repository.findAll(pageable);
+		List<Order> orders = result.getContent().stream().map(orderDoc -> mapper.toOrder(orderDoc)).toList();
+		return Result.ok(orders, result.hasNext(), result.getTotalElements());
 	}
 
 	@Override
-	public Optional<List<Order>> findByStatusOrder(String recebido) {
-		var findByOrderStatus = repository.findByStatusOrder(recebido);
-		return findByOrderStatus.map(all -> mapper.toOrderList(all));
+	public List<Order> findByStatusOrder(String recebido) {
+		return mapper.toOrderList(repository.findByStatusOrder(recebido));
 	}
 
 	public Optional<Order> findbyId(String id) {
@@ -51,8 +56,19 @@ public class OrderRepositoryGateway implements OrderGateway {
 
 	@Override
 	public List<Order> findByStatusAndDate() {
-		Optional<List<OrderDocument>> findByStatusAndDate = null;//repository.findByStatusAndDate();
-		return mapper.toOrderList(findByStatusAndDate.orElse(List.of()));
+		Sort sort = Sort.by(Sort.Direction.ASC, "dateOrderInit");
+		List<OrderDocument>findByStatusAndDate = repository.findByStatusOrderAndDateOrderInit(sort);
+		return mapper.toOrderList(findByStatusAndDate);
+	}
+
+	@Override
+	public List<Order> findOrdersNotSent() {
+		return mapper.toOrderList(repository.findOrdersNotSent());
+	}
+
+	@Override
+	public void update(Order order) {
+		repository.save(mapper.toOrderEntity(order));
 	}
 
 }

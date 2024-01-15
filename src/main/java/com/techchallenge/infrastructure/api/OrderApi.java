@@ -34,17 +34,6 @@ public class OrderApi {
 		return ResponseEntity.created(uriComponents.toUri()).body(Result.create(mapper.toOrderResponse(order)));
 	}
 
-	@PutMapping("/ready/{id}")
-	public ResponseEntity<Result<OrderResponse>> ready(@PathVariable String id) {		
-		Order order = orderUseCase.ready(id);
-		return ResponseEntity.ok(Result.ok(mapper.toOrderResponse(order)));
-	}
-
-	@PutMapping("/finish/{id}")
-	public ResponseEntity<Result<OrderResponse>> finish(@PathVariable String id) {		
-		Order order = orderUseCase.finish(id);
-		return ResponseEntity.ok(Result.ok(mapper.toOrderResponse(order)));
-	}
 	
 	@GetMapping("/find/{id}")
 	public ResponseEntity<Result<OrderResponse>> findByid(@PathVariable String id) {		
@@ -56,8 +45,8 @@ public class OrderApi {
 	public ResponseEntity<Result<List<OrderResponse>>> findAll(
 			@RequestParam(value = "page", required = false, defaultValue = "0") int page,
 			@RequestParam(value = "size", required = false, defaultValue = "10") int size) {
-		List<Order> findAll = orderUseCase.findAll(page, size, null);		
-		return ResponseEntity.ok(Result.ok(mapper.toOrderListResponse(findAll)));
+		Result<List<Order>> all = orderUseCase.findAll(page, size);
+		return ResponseEntity.ok(Result.ok(mapper.toOrderListResponse(all.getBody()), all.getHasNext(), all.getTotal()));
 	}
 
 	

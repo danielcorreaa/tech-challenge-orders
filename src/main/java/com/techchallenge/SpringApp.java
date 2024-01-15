@@ -6,8 +6,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.kafka.annotation.EnableKafka;
 
 
-@SpringBootApplication
 @EnableKafka
+@SpringBootApplication
 @EnableFeignClients
 public class SpringApp {
 

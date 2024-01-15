@@ -11,6 +11,7 @@ import java.util.List;
 
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -18,10 +19,11 @@ import java.util.List;
 public class OrderDocument {
     @Id
     private String id;
-    private Customer customer;
-    private List<Product> products;
+    private CustomerDocument customer;
+    private List<ProductDocument> products;
     private LocalDateTime dateOrderInit;
     private LocalDateTime dateOrdernFinish;
     private String statusOrder;
+    private Boolean sent;
 
 }

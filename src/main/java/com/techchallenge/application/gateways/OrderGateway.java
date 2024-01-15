@@ -1,5 +1,6 @@
 package com.techchallenge.application.gateways;
 
+import com.techchallenge.core.response.Result;
 import com.techchallenge.domain.entity.Order;
 
 import java.util.List;
@@ -9,13 +10,16 @@ public interface OrderGateway {
 	
 	Order insert(Order order);
 
-	Optional<List<Order>> findAll(int page, int size, List<String> sort);
+	Result<List<Order>> findAll(int page, int size);
 
-	Optional<List<Order>> findByStatusOrder(String recebido);
+	List<Order> findByStatusOrder(String recebido);
 
 	Optional<Order> findbyId(String id);
 
 	List<Order> findByStatusAndDate();
 
 
+	List<Order> findOrdersNotSent();
+
+	void update(Order order);
 }

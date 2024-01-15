@@ -2,7 +2,7 @@ server:
   port: 8086
 spring:
   application:
-    name: tech-challenge-product
+    name: tech-challenge-orders
   data:
     mongodb:
       authentication-database: admin
@@ -23,4 +23,9 @@ api:
     path: api/v1/customers/find
 kafka:
   topic:
-    orders: tech.orders
+    produce:
+      orders: tech.orders
+    consumer:
+      groupId: production
+      production:
+        status: status.production

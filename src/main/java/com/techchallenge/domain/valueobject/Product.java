@@ -5,24 +5,24 @@ import java.math.BigDecimal;
 
 public class Product {
 
-	private String id;
+	private String sku;
 	private String title;
 	private String category;
 	private String description;
 	private BigDecimal price;
 	private String image;
 
-	public Product(String id, String title, String category, String description, BigDecimal price, String image) {
+	public Product(String sku, String title, String category, String description, BigDecimal price, String image) {
 		this.category = category;
-		this.id = id;
+		this.sku = sku;
 		this.title = title;		
 		this.description = description;
 		this.price = price;
 		this.image = image;
 	}
 
-	public String getId() {
-		return id;
+	public String getSku() {
+		return sku;
 	}
 
 	public String getTitle() {
