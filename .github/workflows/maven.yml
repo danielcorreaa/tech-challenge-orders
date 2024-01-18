@@ -26,7 +26,6 @@ jobs:
         echo "branch coverage = ${{ steps.jacoco.outputs.branches }}"
       # You may pin to the exact commit or the version.
       # uses: cicirello/jacoco-badge-generator@f33476a5a3fd5a4f77cb5eef2ebe728c1dd5b921
-      uses: cicirello/jacoco-badge-generator@v2.11.0
       with:  
         fail-if-coverage-less-than: 8
         # Enables failing workflow run when branches coverage below specified threshold.
