@@ -27,11 +27,11 @@ public class ProductionConsumer {
             groupId = "${kafka.topic.consumer.groupId}",
             containerFactory = "kafkaListenerContainerFactoryStatusDto")
     public void
-    listenStatus(@Payload StatusDto record, Acknowledgment ack) {
-        log.info("Received Message: " + record.toString());
+    listenStatus(@Payload StatusDto statusDto, Acknowledgment ack) {
+        log.info("Received Message: " + statusDto.toString());
         try {
-            Order order = orderUseCase.findById(record.orderId());
-            orderUseCase.update(order.changeStatus(record.status()));
+            Order order = orderUseCase.findById(statusDto.orderId());
+            orderUseCase.update(order.changeStatus(statusDto.status()));
             ack.acknowledge();
             latch.countDown();
         } catch (Exception ex){

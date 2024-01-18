@@ -1,7 +1,5 @@
 package com.techchallenge.infrastructure.persistence.document;
 
-import com.techchallenge.domain.valueobject.Customer;
-import com.techchallenge.domain.valueobject.Product;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

@@ -82,8 +82,7 @@ public class KafkaConfig {
         return  new MessageUseCaseInteractor(topicProducer());
     }
 
-    public <T> JsonDeserializer<T> jsonDeserializer(JsonDeserializer jsonDeserializer){
-        JsonDeserializer<T> deserializer = jsonDeserializer;
+    public <T> JsonDeserializer<T> jsonDeserializer(JsonDeserializer<T> deserializer){
         deserializer.setRemoveTypeHeaders(false);
         deserializer.addTrustedPackages("*");
         deserializer.setUseTypeMapperForKey(true);

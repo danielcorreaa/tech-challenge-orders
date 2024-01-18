@@ -120,7 +120,7 @@ class OrderApiTest {
     @Nested
     class TestCheckout {
         @Test
-        public void testInsertOrderValidateNull() throws Exception {
+        void testInsertOrderValidateNull() throws Exception {
             OrderRequest request = new OrderRequest("", null);
 
 
@@ -142,7 +142,7 @@ class OrderApiTest {
 
 
         @Test
-        public void testInsertOrder_withCustomer_withProducts() throws Exception {
+        void testInsertOrder_withCustomer_withProducts() throws Exception {
             List<String> skus = List.of("2253001", "2253002");
             String cpf = "37465505569";
             OrderRequest request = new OrderRequest(cpf, skus);
@@ -175,7 +175,7 @@ class OrderApiTest {
         }
 
         @Test
-        public void testInsertOrder_withCustomerNotFound() throws Exception {
+        void testInsertOrder_withCustomerNotFound() throws Exception {
             List<String> skus = List.of("2253001", "2253002");
             String cpf = "37465505569";
             OrderRequest request = new OrderRequest(cpf, skus);
@@ -201,7 +201,7 @@ class OrderApiTest {
         }
 
         @Test
-        public void testInsertOrder_withErrorCustomerApi() throws Exception {
+        void testInsertOrder_withErrorCustomerApi() throws Exception {
             List<String> skus = List.of("2253001", "2253002");
             String cpf = "37465505569";
             OrderRequest request = new OrderRequest(cpf, skus);
@@ -227,7 +227,7 @@ class OrderApiTest {
         }
 
         @Test
-        public void testInsertOrder_withNoCustomer_withProducts() throws Exception {
+        void testInsertOrder_withNoCustomer_withProducts() throws Exception {
             List<String> skus = List.of("2253001", "2253002");
             String cpf = null;
             OrderRequest request = new OrderRequest(cpf, skus);
@@ -259,7 +259,7 @@ class OrderApiTest {
         }
 
         @Test
-        public void testInsertOrder_withCustomer_withProductsNotFound() throws Exception {
+        void testInsertOrder_withCustomer_withProductsNotFound() throws Exception {
             List<String> skus = List.of("2253001", "2253002");
             String cpf = "37465505569";
             OrderRequest request = new OrderRequest(cpf, skus);
@@ -287,7 +287,7 @@ class OrderApiTest {
         }
 
         @Test
-        public void testInsertOrder_withCustomer_withProductsApiError() throws Exception {
+        void testInsertOrder_withCustomer_withProductsApiError() throws Exception {
             List<String> skus = List.of("2253001", "2253002");
             String cpf = "37465505569";
             OrderRequest request = new OrderRequest(cpf, skus);

@@ -56,14 +56,16 @@ class OrderProduceTest {
     OrderEntityMapper orderEntityMapper;
     CustomerDtoMapper customerDtoMapper;
     ProductsDtoMapper productsDtoMapper;
-    @Mock
+
     CustomerEntityMapper custumerEntityMapper;
-    @Mock
+
     ProductEntityMapper productEntityMapper;
     ObjectMock mock;
 
     @BeforeEach
     void init(){
+        productEntityMapper = new ProductEntityMapper();
+        custumerEntityMapper = new CustomerEntityMapper();
         productsDtoMapper = new ProductsDtoMapper();
         customerDtoMapper = new CustomerDtoMapper();
         orderEntityMapper = new OrderEntityMapper(custumerEntityMapper, productEntityMapper);

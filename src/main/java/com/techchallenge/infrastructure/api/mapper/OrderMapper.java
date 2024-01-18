@@ -28,16 +28,16 @@ public class OrderMapper {
 	}
 
 	public List<OrderResponse> toOrderListResponse(List<Order> orders) {
-		return orders.stream().map(order -> toOrderResponse(order)).collect(Collectors.toList());
+		return orders.stream().map(this::toOrderResponse).toList();
 	}
 
 	public ProductResponse toProductResponse(Product product) {
-		return new ProductResponse(product.getSku(), product.getTitle(), product.getCategory().toString(),
+		return new ProductResponse(product.getSku(), product.getTitle(), product.getCategory(),
 				product.getDescription(), product.getPrice(), product.getImage());
 	}
 
 	public List<ProductResponse> toProductResponseList(List<Product> product) {
-		return product.stream().map( p -> toProductResponse(p)).collect(Collectors.toList());
+		return product.stream().map(this::toProductResponse).collect(Collectors.toList());
 	}
 
 	public CustomerResponse toCustomerResponse(Customer customer) {

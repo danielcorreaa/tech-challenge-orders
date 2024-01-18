@@ -30,7 +30,7 @@ public class OrderUseCaseInteractor implements OrderUseCase {
 
 	public Order insert(String cpf, List<String> productsId) {
 		Customer customer = null;
-		if(iaNotNullOrEmpty(cpf)){
+		if(Boolean.TRUE.equals(iaNotNullOrEmpty(cpf))){
 			 customer = customerGateway.findByCpf(cpf)
 					 .orElseThrow(() -> new NotFoundException("Customer not found for cpf: "+cpf));
 		}

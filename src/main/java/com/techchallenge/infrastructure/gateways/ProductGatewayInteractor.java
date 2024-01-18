@@ -8,9 +8,7 @@ import com.techchallenge.infrastructure.external.dtos.ProductDto;
 import com.techchallenge.infrastructure.external.mapper.ProductsDtoMapper;
 import com.techchallenge.infrastructure.external.request.RequestProducts;
 import feign.FeignException;
-import org.apache.kafka.common.quota.ClientQuotaAlteration;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;

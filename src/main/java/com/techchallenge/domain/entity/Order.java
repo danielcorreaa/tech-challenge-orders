@@ -80,10 +80,10 @@ public class Order {
 
 	public Long getMinutesDurationOrder() {
 		if(Optional.ofNullable(getFinishOrder()).isPresent()) {
-			minutesDurationOrder = this.dateOrderInit.until(getFinishOrder(), ChronoUnit.MINUTES);
+			this.minutesDurationOrder = this.dateOrderInit.until(getFinishOrder(), ChronoUnit.MINUTES);
 			return minutesDurationOrder;
 		}
-		minutesDurationOrder = this.dateOrderInit.until(LocalDateTime.now(), ChronoUnit.MINUTES);
+		this.minutesDurationOrder = this.dateOrderInit.until(LocalDateTime.now(), ChronoUnit.MINUTES);
 		return minutesDurationOrder;
 	}
 
@@ -100,7 +100,7 @@ public class Order {
 	}
 
 	public String getStatusOrderString() {
-		return getStatusOrder().map( order -> order.toString()).orElse("");
+		return getStatusOrder().map(Object::toString).orElse("");
 	}
 
 	public Boolean getSent() {
