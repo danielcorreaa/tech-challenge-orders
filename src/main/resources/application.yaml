@@ -6,20 +6,23 @@ spring:
   data:
     mongodb:
       authentication-database: admin
-      host: localhost
+      #uri: mongodb://root:example@mongo-db/tech-challenge-orders?authSource=admin&replicaSet=myRepl
+      #uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@{MONGO_HOST}/tech-challenge-orders
+      host: 10.109.185.177
       port: 27017
       database: tech-challenge-orders
-      username: root
-      password: example
+      username: ${MONGO_USERNAME}
+      password: ${MONGO_PASSWORD}
+
 
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_SERVERS}
 api:
   products:
-    url: localhost:8082
+    url: ${URL_PRODUCTS}
     path: api/v1/products/find
   customers:
-    url: localhost:8085
+    url: ${URL_CUSTOMERS}
     path: api/v1/customers/find
 kafka:
   topic:
@@ -28,4 +31,4 @@ kafka:
     consumer:
       groupId: production
       production:
-        status: status.production
+        status: status.order
