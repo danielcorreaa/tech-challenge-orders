@@ -23,6 +23,6 @@ jobs:
 
       - run: kubectl apply -f ..\..\k8s/orders-deployment.yaml
       - run: kubectl apply -f ..\..\k8s/orders-service.yaml
-      - run: kubectl set image deployment/orders app=daniel36/tech-challenge-orders:${{github.run_number}}
+      - run: kubectl set image deployment/orders orders=daniel36/tech-challenge-orders:${{github.run_number}}
       - run: kubectl apply -f ..\..\k8s/orders-hpa.yaml
       - run: kubectl get svc

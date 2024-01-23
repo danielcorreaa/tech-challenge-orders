@@ -91,20 +91,20 @@ jobs:
         - name: Push image docker
           run: docker push daniel36/tech-challenge-orders:${{github.run_number}}
 
-      deploy-dev:
+    deploy-dev:
         needs: docker-pull-image
         if: github.ref == 'refs/heads/develop'
         uses: ./.github/workflows/deploy-dev.yml
         secrets: inherit
 
-      deploy-qa:
+    deploy-qa:
         needs: docker-pull-image
-        if: github.ref == 'refs/heads/develop'
+        if: github.ref == 'refs/heads/release'
         uses: ./.github/workflows/deploy-release.yml
         secrets: inherit
 
-      deploy-prod:
+    deploy-prod:
         needs: docker-pull-image
-        if: github.ref == 'refs/heads/develop'
+        if: github.ref == 'refs/heads/main'
         uses: ./.github/workflows/deploy-orid.yml
         secrets: inherit
