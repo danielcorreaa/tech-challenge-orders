@@ -67,10 +67,10 @@ public class KafkaConfig {
         return new ProductionConsumer(orderUseCase);
     }
 
-    @Bean
-    public OrderProduce paymentProduce(MessageUseCase messageUseCase, OrderUseCase orderUseCase){
-        return new OrderProduce(messageUseCase,orderUseCase);
-    }
+    //@Bean
+    //public OrderProduce paymentProduce(MessageUseCase messageUseCase, OrderUseCase orderUseCase){
+        //return new OrderProduce(messageUseCase,orderUseCase);
+    //}
 
     @Bean
     public TopicProducer<Order> topicProducer(){

@@ -4,12 +4,14 @@ import com.techchallenge.application.usecases.MessageUseCase;
 import com.techchallenge.application.usecases.OrderUseCase;
 import com.techchallenge.domain.entity.Order;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.List;
 
 @Log4j2
+@Configuration
 @EnableScheduling
 public class OrderProduce {
 
