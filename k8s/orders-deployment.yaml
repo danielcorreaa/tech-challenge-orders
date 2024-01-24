@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: orders
-          image: orders:01
+          image: daniel36/tech-challenge-orders:17
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -48,10 +48,10 @@ spec:
                   key: kafka-servers
 
             - name: URL_PRODUCTS
-              value: tech-challenge-products
+              value: product
 
             - name: URL_CUSTOMERS
-              value: tech-challenge-customers
+              value: customer
 
 
 ---

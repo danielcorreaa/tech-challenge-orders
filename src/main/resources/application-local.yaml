@@ -6,13 +6,13 @@ spring:
   data:
     mongodb:
       authentication-database: admin
-      uri: mongodb://root:example@localhost:27017/tech-challenge-orders?authSource=admin&replicaSet=myRepl
+      //uri: mongodb://root:example@localhost:27017/tech-challenge-orders?authSource=admin&replicaSet=myRepl
 
-      #host: localhost
-      #port: 27017
-      #database: tech-challenge-orders
-      #username: root
-      #password: example
+      host: localhost
+      port: 27017
+      database: tech-challenge-orders
+      username: root
+      password: example
 
   kafka:
     bootstrap-servers: localhost:9092
