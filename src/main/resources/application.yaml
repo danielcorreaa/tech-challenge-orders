@@ -30,3 +30,8 @@ kafka:
       groupId: production
       production:
         status: status.order
+
+logging:
+  level:
+    com.techchallenge.infrastructure.external.request:
+      RequestCustomer: DEBUG
