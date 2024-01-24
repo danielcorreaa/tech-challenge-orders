@@ -48,10 +48,10 @@ spec:
                   key: kafka-servers
 
             - name: URL_PRODUCTS
-              value: product
+              value: product:8082
 
             - name: URL_CUSTOMERS
-              value: customer
+              value: customer:8082
 
 
 ---
