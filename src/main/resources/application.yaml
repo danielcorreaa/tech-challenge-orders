@@ -6,11 +6,9 @@ spring:
   data:
     mongodb:
       authentication-database: admin
-      #uri: mongodb://root:example@mongo-db/tech-challenge-orders?authSource=admin&replicaSet=myRepl
-      #uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@{MONGO_HOST}/tech-challenge-orders
-      host: 10.109.185.177
-      port: 27017
-      database: tech-challenge-orders
+      host: ${MONGO_HOST}
+      port:
+      database: tech-challenge-product
       username: ${MONGO_USERNAME}
       password: ${MONGO_PASSWORD}
 
