@@ -30,7 +30,7 @@ public class StepDefinition {
     OrderHelper helper = new OrderHelper();
 
     private String ENDPOINT_ORDERS = "http://localhost:8085/api/v1/orders";
-    private String ENDPOINT_PRODUCTS = "http://localhost:8084/api/v1/products";
+    private String ENDPOINT_PRODUCTS = "http://localhost:8087/api/v1/products";
     private String ENDPOINT_CUSTOMERS = "http://localhost:8083/api/v1/customers";
 
     @Dado("que quero inciar um pedido")
