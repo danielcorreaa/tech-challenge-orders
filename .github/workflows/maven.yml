@@ -60,7 +60,8 @@ jobs:
       - run: docker ps
       - uses: GuillaumeFalourd/wait-sleep-action@v1
         with:
-          time: '60' # for 60 seconds
+          time: '90' # for 60 seconds
+      - run: docker ps
       - run: mvn test -P system-test
       - uses: actions/upload-artifact@v4
         with:
