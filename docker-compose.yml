@@ -1,0 +1,136 @@
+version: '3.2'
+ 
+services:
+  mongodb:
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_DATABASE: tech-challenge-orders
+    networks:
+      - ambiente-mongo
+  orders:
+    restart: always
+    container_name: orders
+    build:
+      context: .
+    ports:
+      - "8085:8082"
+    environment:
+      MONGO_HOST: mongodb
+      MONGO_USERNAME: root
+      MONGO_PASSWORD: example
+      KAFKA_SERVERS: kafka:19092
+      URL_PRODUCTS: products:8082
+      URL_CUSTOMERS: customers:8082
+    links:
+      - mongodb
+      - kafka
+      - customers
+      - products
+    networks:
+      - ambiente-kafka
+      - ambiente-mongo
+      - ambiente-app
+
+  zookeeper:
+    container_name: zookeeper
+    image: wurstmeister/zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+    networks:
+      - ambiente-kafka
+
+    # https://hub.docker.com/r/confluentinc/cp-kafka/
+  kafka:
+      container_name: kafka
+      image: wurstmeister/kafka:2.12-2.2.1
+      environment:
+        ## the >- used below infers a value which is a string and properly
+        ## ignore the multiple lines resulting in one long string:
+        ## https://yaml.org/spec/1.2/spec.html
+
+        KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka:19092,LISTENER_DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092
+        KAFKA_LISTENERS: >-
+          LISTENER_DOCKER_INTERNAL://:19092,
+          LISTENER_DOCKER_EXTERNAL://:9092
+
+        KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: >-
+          LISTENER_DOCKER_INTERNAL:PLAINTEXT,
+          LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+
+        KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+        KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+        KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+        KAFKA_LOG4J_LOGGERS: >-
+          kafka.controller=INFO,
+          kafka.producer.async.DefaultEventHandler=INFO,
+          state.change.logger=INFO
+      ports:
+        - 9092:9092
+      depends_on:
+        - zookeeper
+      networks:
+        - ambiente-kafka
+
+  mysqldb:
+    image: mysql
+    container_name: mysqldb
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "dani"
+      MYSQL_DATABASE: "customer"
+    networks:
+      - ambiente-mysql
+
+  customers:
+    restart: always
+    container_name: customers
+    image: daniel36/tech-challenge-customer:latest
+    ports:
+      - "8083:8082"
+    environment:
+      DB_SERVER: mysqldb
+      DB_NAME: customer
+      DB_USERNAME: root
+      DB_PASSWORD: dani
+    depends_on:
+      - mysqldb
+    links:
+      - mysqldb
+    networks:
+      - ambiente-mysql
+      - ambiente-app
+
+  products:
+    restart: always
+    container_name: products
+    image: daniel36/tech-challenge-product:latest
+    ports:
+      - "8084:8082"
+    environment:
+      MONGO_HOST: mongodb
+      MONGO_USERNAME: root
+      MONGO_PASSWORD: example
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+    networks:
+     - ambiente-mongo
+     - ambiente-app
+
+networks: 
+  ambiente-mysql:
+  ambiente-mongo:
+  ambiente-app:
+  ambiente-kafka:
+

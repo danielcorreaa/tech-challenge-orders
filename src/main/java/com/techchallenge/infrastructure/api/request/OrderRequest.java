@@ -6,6 +6,8 @@ import lombok.Getter;
 import java.util.List;
 
 public record OrderRequest(
+
+		String orderId,
 		@Getter		
 		String cpfCustumer, 
 		
@@ -14,4 +16,7 @@ public record OrderRequest(
 		List<String> products
 		) {
 
+	public OrderRequest(String cpfCustumer, List<String> products) {
+		this(null, cpfCustumer, products);
+	}
 }

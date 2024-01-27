@@ -6,22 +6,15 @@ import com.techchallenge.domain.entity.Order;
 import com.techchallenge.infrastructure.external.mapper.CustomerDtoMapper;
 import com.techchallenge.infrastructure.external.mapper.ProductsDtoMapper;
 import com.techchallenge.infrastructure.persistence.document.OrderDocument;
-import com.techchallenge.infrastructure.persistence.mapper.CustomerEntityMapper;
 import com.techchallenge.infrastructure.persistence.mapper.OrderEntityMapper;
-import com.techchallenge.infrastructure.persistence.mapper.ProductEntityMapper;
 import com.techchallenge.infrastructure.persistence.repository.OrderRepository;
-import com.techchallenge.utils.ObjectMock;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
+import com.techchallenge.utils.OrderHelper;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -41,14 +34,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration( classes = {KafkaTestConfig.class})
 @TestPropertySource(locations = {"classpath:application-test.properties"})
 @Testcontainers
-class OrderProduceIntegrationTest {
+class OrderProduceIT {
 
     @Container
     static MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:6.0.2"))
@@ -77,7 +68,7 @@ class OrderProduceIntegrationTest {
         kafkaContainer.stop();
     }
 
-    ObjectMock mock;
+    OrderHelper mock;
 
     @Autowired
     OrderRepository orderRepository;
@@ -96,7 +87,7 @@ class OrderProduceIntegrationTest {
 
     @BeforeEach
     void init(){
-        mock = new ObjectMock(orderEntityMapper, customerDtoMapper, productsDtoMapper);
+        mock = new OrderHelper(orderEntityMapper, customerDtoMapper, productsDtoMapper);
         clear();
     }
 

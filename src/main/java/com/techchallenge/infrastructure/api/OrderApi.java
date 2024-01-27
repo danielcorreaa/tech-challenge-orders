@@ -29,7 +29,7 @@ public class OrderApi {
 
 	@PostMapping("/checkout")
 	public ResponseEntity<Result<OrderResponse>> insert(@RequestBody @Valid OrderRequest request, UriComponentsBuilder uri) {
-		Order order = orderUseCase.insert(request.getCpfCustumer(), request.getProducts());
+		Order order = orderUseCase.insert(request);
 		UriComponents uriComponents = uri.path("/api/v1/orders/find/{id}").buildAndExpand(order.getId());
 		return ResponseEntity.created(uriComponents.toUri()).body(Result.create(mapper.toOrderResponse(order)));
 	}

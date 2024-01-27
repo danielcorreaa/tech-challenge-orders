@@ -3,6 +3,7 @@ package com.techchallenge.utils;
 import com.techchallenge.domain.entity.Order;
 import com.techchallenge.domain.valueobject.Customer;
 import com.techchallenge.domain.valueobject.Product;
+import com.techchallenge.infrastructure.api.request.OrderRequest;
 import com.techchallenge.infrastructure.external.dtos.CustomerDto;
 import com.techchallenge.infrastructure.external.dtos.ProductDto;
 import com.techchallenge.infrastructure.external.mapper.CustomerDtoMapper;
@@ -13,16 +14,19 @@ import com.techchallenge.infrastructure.persistence.mapper.OrderEntityMapper;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class ObjectMock {
+public class OrderHelper {
 
     private OrderEntityMapper orderEntityMapper;
     private CustomerDtoMapper customerDtoMapper;
     private ProductsDtoMapper productsDtoMapper;
 
-    public ObjectMock(OrderEntityMapper orderEntityMapper, CustomerDtoMapper customerDtoMapper, ProductsDtoMapper productsDtoMapper) {
+    public OrderHelper(OrderEntityMapper orderEntityMapper, CustomerDtoMapper customerDtoMapper, ProductsDtoMapper productsDtoMapper) {
         this.orderEntityMapper = orderEntityMapper;
         this.customerDtoMapper = customerDtoMapper;
         this.productsDtoMapper = productsDtoMapper;
+    }
+
+    public OrderHelper() {
     }
 
     public CustomerDto getCustomerDto(String cpf){
@@ -80,7 +84,7 @@ public class ObjectMock {
     public OrderDocument getOrderDocument(String cpf, List<String> skus){
         return orderEntityMapper.toOrderEntity(getOrder(cpf, skus));
     }
-    public Order getOrder(String cpf, List<String> skus) {
+    public Order getOrder(String cpf, List<String> skus) {       ;
         return new Order().startOrder(getCustomer(cpf), getProducts(skus));
     }
 

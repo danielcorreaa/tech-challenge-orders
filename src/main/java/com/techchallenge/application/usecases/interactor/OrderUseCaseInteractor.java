@@ -9,6 +9,7 @@ import com.techchallenge.core.response.Result;
 import com.techchallenge.domain.entity.Order;
 import com.techchallenge.domain.valueobject.Customer;
 import com.techchallenge.domain.valueobject.Product;
+import com.techchallenge.infrastructure.api.request.OrderRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,16 +29,16 @@ public class OrderUseCaseInteractor implements OrderUseCase {
 		this.productGateway = productGateway;
 	}
 
-	public Order insert(String cpf, List<String> productsId) {
+	public Order insert(OrderRequest request) {
 		Customer customer = null;
-		if(Boolean.TRUE.equals(iaNotNullOrEmpty(cpf))){
-			 customer = customerGateway.findByCpf(cpf)
-					 .orElseThrow(() -> new NotFoundException("Customer not found for cpf: "+cpf));
+		if(Boolean.TRUE.equals(iaNotNullOrEmpty(request.getCpfCustumer()))){
+			 customer = customerGateway.findByCpf(request.getCpfCustumer())
+					 .orElseThrow(() -> new NotFoundException("Customer not found for cpf: "+request.cpfCustumer()));
 		}
-		List<Product> products = productGateway.findByIds(productsId)
+		List<Product> products = productGateway.findByIds(request.getProducts())
 				.orElseThrow(() -> new NotFoundException("Any product found!"));
 
-		Order order = new Order().startOrder(customer, products);
+		Order order = new Order().startOrder(customer, products, request.orderId());
 		order = orderGateway.insert(order);
 		return order;
 	}

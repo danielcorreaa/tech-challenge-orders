@@ -35,16 +35,26 @@ public class Order {
 		this.sent = sent;
 	}
 	
-	public Order startOrder(Customer customer, List<Product> procuts) {
-		this.id = new ObjectId().toString();
+	public Order startOrder(Customer customer, List<Product> procuts, String id) {
+		this.id = id;
 		this.customer = customer;
 		this.products = procuts;
-		this.dateOrderInit = LocalDateTime.now();		
+		this.dateOrderInit = LocalDateTime.now();
 		this.statusOrder = StatusOrder.RECEBIDO;
 		this.sent = Boolean.FALSE;
 		return this;
 	}
-	
+
+	public Order startOrder(Customer customer, List<Product> procuts) {
+		this.id = new ObjectId().toString();
+		this.customer = customer;
+		this.products = procuts;
+		this.dateOrderInit = LocalDateTime.now();
+		this.statusOrder = StatusOrder.RECEBIDO;
+		this.sent = Boolean.FALSE;
+		return this;
+	}
+
 	public Order changeStatus(String status) {
 		this.statusOrder = StatusOrder.getByName(status);
 		if("FINALIZADO".equals(status)){
