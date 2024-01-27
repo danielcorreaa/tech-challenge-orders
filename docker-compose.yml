@@ -115,7 +115,7 @@ services:
     container_name: products
     image: daniel36/tech-challenge-product:latest
     ports:
-      - "8084:8082"
+      - "8087:8082"
     environment:
       MONGO_HOST: mongodb
       MONGO_USERNAME: root
