@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Generated schema for Root",
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "number"
+    },
+    "body": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "custumer": {
+            "type": "object",
+            "properties": {
+              "cpf": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "cpf",
+              "name",
+              "email"
+            ]
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number"
+                },
+                "image": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "category",
+                "description",
+                "price",
+                "image"
+              ]
+            }
+          },
+          "dateOrderInit": {
+            "type": "string"
+          },
+          "minutesDurationOrder": {
+            "type": "number"
+          },
+          "statuOrder": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "products",
+          "dateOrderInit",
+          "minutesDurationOrder",
+          "statuOrder"
+        ]
+      }
+    },
+    "hasNext": {
+      "type": "boolean"
+    },
+    "total": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "code",
+    "body",
+    "hasNext",
+    "total"
+  ]
+}

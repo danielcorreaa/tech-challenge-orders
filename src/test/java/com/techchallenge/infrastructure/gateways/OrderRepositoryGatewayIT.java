@@ -8,7 +8,7 @@ import com.techchallenge.infrastructure.external.mapper.CustomerDtoMapper;
 import com.techchallenge.infrastructure.external.mapper.ProductsDtoMapper;
 import com.techchallenge.infrastructure.persistence.mapper.OrderEntityMapper;
 import com.techchallenge.infrastructure.persistence.repository.OrderRepository;
-import com.techchallenge.utils.ObjectMock;
+import com.techchallenge.utils.OrderHelper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration( classes = {MongoTestConfig.class})
 @TestPropertySource(locations = "classpath:/application-test.properties")
 @Testcontainers
-class OrderRepositoryGatewayTest {
+class OrderRepositoryGatewayIT {
 
     @Container
     static MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:6.0.2"))
@@ -65,7 +65,7 @@ class OrderRepositoryGatewayTest {
     @Autowired
     OrderEntityMapper orderEntityMapper;
 
-    ObjectMock mock;
+    OrderHelper mock;
 
     @Autowired
     CustomerDtoMapper customerDtoMapper;
@@ -76,7 +76,7 @@ class OrderRepositoryGatewayTest {
     @BeforeEach
     void init(){
        orderGateway = new OrderRepositoryGateway(orderRepository, orderEntityMapper);
-       mock = new ObjectMock(orderEntityMapper, customerDtoMapper, productsDtoMapper);
+       mock = new OrderHelper(orderEntityMapper, customerDtoMapper, productsDtoMapper);
        clear();
 
     }

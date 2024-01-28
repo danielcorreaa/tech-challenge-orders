@@ -12,12 +12,9 @@ import com.techchallenge.core.response.JsonUtils;
 import com.techchallenge.core.response.ObjectMapperConfig;
 import com.techchallenge.core.response.Result;
 import com.techchallenge.domain.entity.Order;
-import com.techchallenge.domain.valueobject.Product;
 import com.techchallenge.infrastructure.api.mapper.OrderMapper;
-import com.techchallenge.infrastructure.api.request.CustomerResponse;
 import com.techchallenge.infrastructure.api.request.OrderRequest;
 import com.techchallenge.infrastructure.api.request.OrderResponse;
-import com.techchallenge.infrastructure.api.request.ProductResponse;
 import com.techchallenge.infrastructure.external.mapper.CustomerDtoMapper;
 import com.techchallenge.infrastructure.external.mapper.ProductsDtoMapper;
 import com.techchallenge.infrastructure.external.request.RequestCustomer;
@@ -30,7 +27,7 @@ import com.techchallenge.infrastructure.persistence.mapper.CustomerEntityMapper;
 import com.techchallenge.infrastructure.persistence.mapper.OrderEntityMapper;
 import com.techchallenge.infrastructure.persistence.mapper.ProductEntityMapper;
 import com.techchallenge.infrastructure.persistence.repository.OrderRepository;
-import com.techchallenge.utils.ObjectMock;
+import com.techchallenge.utils.OrderHelper;
 import feign.FeignException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -47,7 +44,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,7 +84,7 @@ class OrderApiTest {
     RequestProducts requestProducts;
     ProductsDtoMapper productsDtoMapper;
 
-    ObjectMock mock;
+    OrderHelper mock;
 
     @BeforeEach
     public void init() {
@@ -113,7 +109,7 @@ class OrderApiTest {
 
         mockMvc = MockMvcBuilders.standaloneSetup(orderApi).setControllerAdvice(new ExceptionHandlerConfig()).build();
 
-        mock = new ObjectMock(orderEntityMapper, customerDtoMapper, productsDtoMapper);
+        mock = new OrderHelper(orderEntityMapper, customerDtoMapper, productsDtoMapper);
 
     }
 
@@ -121,7 +117,7 @@ class OrderApiTest {
     class TestCheckout {
         @Test
         void testInsertOrderValidateNull() throws Exception {
-            OrderRequest request = new OrderRequest("", null);
+            OrderRequest request = new OrderRequest(null, "", null);
 
 
             Optional<String> jsonRequest = jsonUtils.toJson(request);
@@ -147,7 +143,7 @@ class OrderApiTest {
             String cpf = "37465505569";
             OrderRequest request = new OrderRequest(cpf, skus);
 
-            Order order = new Order().startOrder(mock.getCustomer(cpf), mock.getProducts(skus));
+            Order order = new Order().startOrder(  mock.getCustomer(cpf), mock.getProducts(skus));
             OrderDocument orderDocument = orderEntityMapper.toOrderEntity(order);
             when(requestCustomer.findByCpf(cpf)).thenReturn(Result.ok(mock.getCustomerDto(cpf)));
             when(requestProducts.findBySkus(skus)).thenReturn(Result.ok(mock.getProductDtos(skus)));

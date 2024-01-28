@@ -17,7 +17,7 @@ import com.techchallenge.infrastructure.persistence.mapper.CustomerEntityMapper;
 import com.techchallenge.infrastructure.persistence.mapper.OrderEntityMapper;
 import com.techchallenge.infrastructure.persistence.mapper.ProductEntityMapper;
 import com.techchallenge.infrastructure.persistence.repository.OrderRepository;
-import com.techchallenge.utils.ObjectMock;
+import com.techchallenge.utils.OrderHelper;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +29,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -60,7 +59,7 @@ class OrderProduceTest {
     CustomerEntityMapper custumerEntityMapper;
 
     ProductEntityMapper productEntityMapper;
-    ObjectMock mock;
+    OrderHelper mock;
 
     @BeforeEach
     void init(){
@@ -73,7 +72,7 @@ class OrderProduceTest {
         orderUseCase = new OrderUseCaseInteractor(orderGateway, customerGateway, productGateway);
         messageUseCase = new MessageUseCaseInteractor(topicProducer);
         orderProduce = new OrderProduce(messageUseCase, orderUseCase);
-        mock = new ObjectMock(orderEntityMapper, customerDtoMapper, productsDtoMapper);
+        mock = new OrderHelper(orderEntityMapper, customerDtoMapper, productsDtoMapper);
     }
 
     @Test

@@ -6,9 +6,7 @@ import com.techchallenge.application.gateways.ProductGateway;
 import com.techchallenge.application.usecases.OrderUseCase;
 import com.techchallenge.application.usecases.interactor.OrderUseCaseInteractor;
 import com.techchallenge.core.exceptions.BusinessException;
-import com.techchallenge.core.exceptions.NotFoundException;
 import com.techchallenge.core.response.JsonUtils;
-import com.techchallenge.core.response.ObjectMapperConfig;
 import com.techchallenge.infrastructure.external.mapper.CustomerDtoMapper;
 import com.techchallenge.infrastructure.external.mapper.ProductsDtoMapper;
 import com.techchallenge.infrastructure.gateways.OrderRepositoryGateway;
@@ -18,12 +16,11 @@ import com.techchallenge.infrastructure.persistence.mapper.CustomerEntityMapper;
 import com.techchallenge.infrastructure.persistence.mapper.OrderEntityMapper;
 import com.techchallenge.infrastructure.persistence.mapper.ProductEntityMapper;
 import com.techchallenge.infrastructure.persistence.repository.OrderRepository;
-import com.techchallenge.utils.ObjectMock;
+import com.techchallenge.utils.OrderHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -61,7 +58,7 @@ class ProductionConsumerTest {
 
     JsonUtils jsonUtils;
 
-    ObjectMock mock;
+    OrderHelper mock;
 
     OrderEntityMapper orderEntityMapper;
     CustomerDtoMapper customerDtoMapper;
@@ -72,7 +69,7 @@ class ProductionConsumerTest {
         productsDtoMapper = new ProductsDtoMapper();
         customerDtoMapper = new CustomerDtoMapper();
         orderEntityMapper = new OrderEntityMapper(custumerEntityMapper, productEntityMapper);
-        mock = new ObjectMock(orderEntityMapper, customerDtoMapper, productsDtoMapper);
+        mock = new OrderHelper(orderEntityMapper, customerDtoMapper, productsDtoMapper);
         mapper = new OrderEntityMapper(custumerEntityMapper, productEntityMapper);
         orderGateway = new OrderRepositoryGateway(repository, mapper);
         orderUseCase = new OrderUseCaseInteractor(orderGateway, customerGateway, productGateway);
