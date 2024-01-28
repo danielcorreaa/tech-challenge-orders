@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders
+  labels:
+    app: orders
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders
+  template:
+    metadata:
+      labels:
+        app: orders
+    spec:
+      containers:
+        - name: orders
+          image: daniel36/tech-challenge-orders:17
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8086
+          resources:
+            limits:
+              cpu: 0.2
+              memory: "512Mi"
+          env:
+            - name: MONGO_HOST
+              value: mongo-db
+
+            - name: MONGO_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-config-map
+                  key: mongo-username
+
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: mongo-password
+
+            - name: KAFKA_SERVERS
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-config-map
+                  key: kafka-servers
+
+            - name: URL_PRODUCTS
+              value: product:8082
+
+            - name: URL_CUSTOMERS
+              value: customer:8082
+
+
+---
