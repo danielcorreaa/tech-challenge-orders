@@ -35,3 +35,11 @@ logging:
   level:
     com.techchallenge.infrastructure.external.request:
       RequestCustomer: DEBUG
+
+swagger:
+  title: Microserviço de Pedidos
+  contact:
+    email: daniel.cor@outlook.com
+    name: Daniel Aleixo Correa
+    description: Microserviço desenvolvido para o curso de pós tech da FIAP
+    version: 1.0
