@@ -18,7 +18,6 @@ public record OrderResponse(String id, CustomerResponse custumer, List<ProductRe
 		
 		@JsonDeserialize(using = LocalDateTimeDeserializer.class) 		
 		@JsonSerialize(using = LocalDateTimeSerializer.class)
-		
 		@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 		LocalDateTime dateOrderFinish,
 		Long minutesDurationOrder,

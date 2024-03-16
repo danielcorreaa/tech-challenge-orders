@@ -8,7 +8,9 @@ import com.techchallenge.core.kafka.KafkaConsumerConfig;
 import com.techchallenge.core.kafka.KafkaProducerConfig;
 import com.techchallenge.core.kafka.produce.TopicProducer;
 import com.techchallenge.domain.entity.Order;
+import com.techchallenge.infrastructure.message.consumer.PaymentConsumer;
 import com.techchallenge.infrastructure.message.consumer.ProductionConsumer;
+import com.techchallenge.infrastructure.message.consumer.dto.MessagePaymentDto;
 import com.techchallenge.infrastructure.message.consumer.dto.StatusDto;
 import com.techchallenge.infrastructure.message.producer.OrderProduce;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,6 +50,16 @@ public class KafkaConfig {
     }
 
     @Bean
+    public ConsumerFactory<String, MessagePaymentDto> consumerFactoryPaymentDto(){
+        return kafkaConsumerConfig().consumerFactory(jsonDeserializer(new JsonDeserializer<>(MessagePaymentDto.class)));
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, MessagePaymentDto> kafkaListenerContainerFactoryMessagePaymentDto(){
+        return kafkaConsumerConfig().kafkaListenerContainerFactory(consumerFactoryPaymentDto());
+    }
+
+    @Bean
     public KafkaProducerConfig kafkaProducer(){
         return new KafkaProducerConfig(bootstrapAddress);
     }
@@ -65,6 +77,11 @@ public class KafkaConfig {
     @Bean
     public ProductionConsumer orderConsumer(OrderUseCase orderUseCase){
         return new ProductionConsumer(orderUseCase);
+    }
+
+    @Bean
+    public PaymentConsumer paymentConsumer(OrderUseCase orderUseCase){
+        return new PaymentConsumer(orderUseCase);
     }
 
     //@Bean

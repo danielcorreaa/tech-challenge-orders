@@ -26,8 +26,7 @@ public class ProductionConsumer {
     @KafkaListener(topics = "${kafka.topic.consumer.production.status}",
             groupId = "${kafka.topic.consumer.groupId}",
             containerFactory = "kafkaListenerContainerFactoryStatusDto")
-    public void
-    listenStatus(@Payload StatusDto statusDto, Acknowledgment ack) {
+    public void listenStatus(@Payload StatusDto statusDto, Acknowledgment ack) {
         log.info("Received Message: " + statusDto.toString());
         try {
             Order order = orderUseCase.findById(statusDto.orderId());

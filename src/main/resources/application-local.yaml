@@ -31,3 +31,8 @@ kafka:
       groupId: production
       production:
         status: status.order
+      error:
+        payment: tech.error.payment
+        groupId: orders
+
+
