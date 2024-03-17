@@ -9,6 +9,12 @@ Microsserviço responsável pelo gerenciamento de pedidos
 - [@danielcorreaa](https://github.com/danielcorreaa)
 
 
+## Stack utilizada
+
+
+**Back-end:** Java, Spring Boot, Mongodb, Kafka
+
+
 ## Documentação da API
 
 ### Criar, Buscar pedidos
@@ -25,7 +31,7 @@ Microsserviço responsável pelo gerenciamento de pedidos
 | `cpf` | `string` |   Identificador do cliente |
 | `products` | `string` | **Obrigatório**  Identificador dos produtos selecionados para o pedido |
 
-#### Buscar do pedido 
+#### Buscar pedido 
 
 ```http
   GET api/v1/orders/find/{id}
@@ -47,17 +53,11 @@ Microsserviço responsável pelo gerenciamento de pedidos
 | `size`      | `int` | 10 |Quantidade de registro que retornaram na resposta|
 
 
-#### Buscar todos os pedidos
+#### Buscar todos os pedidos ordernados por data de criação, em que o status seja diferente de FINALIZADO
 
 ```http
   GET api/v1/orders/sorted
 ```
-
-#### Buscar todos os pedidos ordernados por data de criação, em que o status seja diferente de FINALIZADO
-## Stack utilizada
-
-
-**Back-end:** Java, Spring Boot, Mongodb
 
 
 ## Rodando localmente
@@ -161,10 +161,10 @@ Depedências
 ## OWASP ZAP
 *Realizei ataque na api usando o OWASP Zap, e deu apenas um alerta de nível baixo, fiz a correção, segue links com o antes e depois*
 
-- [@report-before](https://danielcorreaa.github.io/tech-challenge-orders/before/cardapio/2024-03-11-ZAP-Report-.html)
+- [@report-before](https://danielcorreaa.github.io/tech-challenge-orders/before/pedido/report.html)
 
 
-- [@report-after](https://danielcorreaa.github.io/tech-challenge-orders/after/cardapio/2024-03-11-ZAP-Report-.html)
+- [@report-after](https://danielcorreaa.github.io/tech-challenge-orders/after/pedido/report.html)
 
 ## Documentação Saga
 
