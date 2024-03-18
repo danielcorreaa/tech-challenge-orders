@@ -62,7 +62,7 @@ jobs:
         with:
           time: '90' # for 60 seconds
       - run: docker ps
-      - run: docker logs orders
+      - run: docker logs customers
       - run: mvn test -P system-test
       - uses: actions/upload-artifact@v4
         with:
