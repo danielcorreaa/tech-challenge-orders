@@ -6,6 +6,7 @@ import com.techchallenge.domain.entity.Order;
 import com.techchallenge.infrastructure.api.mapper.OrderMapper;
 import com.techchallenge.infrastructure.api.request.OrderRequest;
 import com.techchallenge.infrastructure.api.request.OrderResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/orders")
+@Tag(name = "Orders API")
 public class OrderApi {
 
 	private OrderUseCase orderUseCase;
