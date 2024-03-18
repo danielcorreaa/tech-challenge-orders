@@ -43,7 +43,7 @@ logging:
 swagger:
   title: Microserviço de Pedidos
   version: 1.0
-  description: APi para cadastro e pesquisa de Clientes
+  description: APi para cadastro e pesquisa de Pedidos
   contact:
     name: Daniel A. Correa
     email: daniel.cor@outlook.com
