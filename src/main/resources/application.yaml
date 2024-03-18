@@ -22,6 +22,7 @@ api:
   customers:
     url: ${URL_CUSTOMERS}
     path: api/v1/customers/find
+
 kafka:
   topic:
     produce:
@@ -30,6 +31,9 @@ kafka:
       groupId: production
       production:
         status: status.order
+      error:
+        payment: tech.error.payment
+        groupId: orders
 
 logging:
   level:
