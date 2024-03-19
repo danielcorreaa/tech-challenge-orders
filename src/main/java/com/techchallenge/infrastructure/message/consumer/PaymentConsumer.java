@@ -13,7 +13,6 @@ import java.util.concurrent.CountDownLatch;
 public class PaymentConsumer {
 
     private final OrderUseCase orderUseCase;
-    //private final NotifyCustomerUseCase notifyCustomerUseCase;
 
     private CountDownLatch latch = new CountDownLatch(1);
 

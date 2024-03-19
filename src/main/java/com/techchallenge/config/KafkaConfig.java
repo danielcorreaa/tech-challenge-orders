@@ -32,31 +32,39 @@ public class KafkaConfig {
     private String topic;
 
     @Value(value = "${kafka.topic.consumer.groupId}")
-    private String groupId;
+    private String groupIdProduction;
+
+    @Value(value = "${kafka.topic.consumer.error.groupId}")
+    private String groupIdPayment;
 
     @Bean
-    public KafkaConsumerConfig kafkaConsumerConfig(){
-        return new KafkaConsumerConfig(bootstrapAddress, groupId);
+    public KafkaConsumerConfig kafkaConsumerConfigProduction(){
+        return new KafkaConsumerConfig(bootstrapAddress, groupIdProduction);
+    }
+
+    @Bean
+    public KafkaConsumerConfig kafkaConsumerConfigPayment(){
+        return new KafkaConsumerConfig(bootstrapAddress, groupIdPayment);
     }
 
     @Bean
     public ConsumerFactory<String, StatusDto> consumerFactoryStatusDto(){
-        return kafkaConsumerConfig().consumerFactory(jsonDeserializer(new JsonDeserializer<>(StatusDto.class)));
+        return kafkaConsumerConfigProduction().consumerFactory(jsonDeserializer(new JsonDeserializer<>(StatusDto.class)));
     }
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, StatusDto> kafkaListenerContainerFactoryStatusDto(){
-        return kafkaConsumerConfig().kafkaListenerContainerFactory(consumerFactoryStatusDto());
+        return kafkaConsumerConfigProduction().kafkaListenerContainerFactory(consumerFactoryStatusDto());
     }
 
     @Bean
     public ConsumerFactory<String, MessagePaymentDto> consumerFactoryPaymentDto(){
-        return kafkaConsumerConfig().consumerFactory(jsonDeserializer(new JsonDeserializer<>(MessagePaymentDto.class)));
+        return kafkaConsumerConfigPayment().consumerFactory(jsonDeserializer(new JsonDeserializer<>(MessagePaymentDto.class)));
     }
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, MessagePaymentDto> kafkaListenerContainerFactoryMessagePaymentDto(){
-        return kafkaConsumerConfig().kafkaListenerContainerFactory(consumerFactoryPaymentDto());
+        return kafkaConsumerConfigPayment().kafkaListenerContainerFactory(consumerFactoryPaymentDto());
     }
 
     @Bean
@@ -78,16 +86,6 @@ public class KafkaConfig {
     public ProductionConsumer orderConsumer(OrderUseCase orderUseCase){
         return new ProductionConsumer(orderUseCase);
     }
-
-    @Bean
-    public PaymentConsumer paymentConsumer(OrderUseCase orderUseCase){
-        return new PaymentConsumer(orderUseCase);
-    }
-
-    //@Bean
-    //public OrderProduce paymentProduce(MessageUseCase messageUseCase, OrderUseCase orderUseCase){
-        //return new OrderProduce(messageUseCase,orderUseCase);
-    //}
 
     @Bean
     public TopicProducer<Order> topicProducer(){

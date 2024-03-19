@@ -33,6 +33,5 @@ kafka:
         status: status.order
       error:
         payment: tech.error.payment
-        groupId: orders
-
+        groupId: payment
 
