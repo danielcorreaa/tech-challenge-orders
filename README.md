@@ -59,6 +59,33 @@ Microsserviço responsável pelo gerenciamento de pedidos
   GET api/v1/orders/sorted
 ```
 
+## OWASP ZAP
+*Realizei ataque na api usando o OWASP Zap, e deu apenas um alerta de nível baixo, fiz a correção, segue links com o antes e depois*
+
+- [@report-before](https://danielcorreaa.github.io/tech-challenge-orders/before/pedido/report.html)
+
+
+- [@report-after](https://danielcorreaa.github.io/tech-challenge-orders/after/pedido/report.html)
+
+## Relatório RIPD
+*RELATÓRIO DE IMPACTO À PROTEÇÃO DE DADOS PESSOAIS*
+
+- [@RIPD](https://danielcorreaa.github.io/tech-challenge-orders/RIPD.pdf)
+
+## Documentação Saga
+
+### Padrão escolhido: Coreografia 
+
+#### Razão de utilizar a coreografia
+*Escolhi o padrão coreografado para evitar deixar tudo centralizado no serviço de pedidos, no caso de acontecer alguma falha no serviço de pedidos toda a operação de notificar cliente e enviar os pedidos pagos para a cozinha seria paralizada, com a coreografia mesmo que tenha algum problema com o serviço de pedidos, a cozinha ainda recebe os pedidos com pagamentos aprovados, nao parando a produção de pedidos pagos, e os clientes recebem notificaçao de problemas com o pagamento.*
+
+#### Desenho da solução
+
+- [@Desenho Padrão Saga coreografado.](https://danielcorreaa.github.io/tech-challenge-orders/images/saga-diagrama.png)
+
+![Desenho Padrão Saga coreografado.](/images/saga-diagrama.png)
+
+
 
 ## Rodando localmente
 
@@ -97,7 +124,7 @@ No navegador
 Clone o projeto com a infraestrutura
 
 ```bash
-  git clone danielcorreaa/tech-challenge-infra-terraform-kubernetes
+  git clone https://github.com/danielcorreaa/tech-challenge-infra-terraform-kubernetes.git
 ```
 Entre no diretório do projeto
 
@@ -158,29 +185,4 @@ Depedências
 
 
 
-## OWASP ZAP
-*Realizei ataque na api usando o OWASP Zap, e deu apenas um alerta de nível baixo, fiz a correção, segue links com o antes e depois*
-
-- [@report-before](https://danielcorreaa.github.io/tech-challenge-orders/before/pedido/report.html)
-
-
-- [@report-after](https://danielcorreaa.github.io/tech-challenge-orders/after/pedido/report.html)
-
-## Relatório RIPD
-*RELATÓRIO DE IMPACTO À PROTEÇÃO DE DADOS PESSOAIS*
-
-- [@RIPD](https://danielcorreaa.github.io/tech-challenge-orders/RIPD.pdf)
-
-## Documentação Saga
-
-### Padrão escolhido: Coreografia 
-
-#### Razão de utilizar a coreografia
-*Escolhi o padrão coreografado para evitar deixar tudo centralizado no serviço de pedidos, no caso de acontecer alguma falha no serviço de pedidos toda a operação de notificar cliente e enviar os pedidos pagos para a cozinha seria paralizada, com a coreografia mesmo que tenha algum problema com o serviço de pedidos, a cozinha ainda recebe os pedidos com pagamentos aprovados, nao parando a produção de pedidos pagos, e os clientes recebem notificaçao de problemas com o pagamento.*
-
-#### Desenho da solução
-
-- [@Desenho Padrão Saga coreografado.](https://danielcorreaa.github.io/tech-challenge-orders/images/saga-diagrama.png)
-
-![Desenho Padrão Saga coreografado.](/images/saga-diagrama.png)
 
