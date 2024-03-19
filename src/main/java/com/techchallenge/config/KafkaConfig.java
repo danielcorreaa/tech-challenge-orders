@@ -97,6 +97,12 @@ public class KafkaConfig {
         return  new MessageUseCaseInteractor(topicProducer());
     }
 
+    @Bean
+    public PaymentConsumer paymentConsumer(OrderUseCase orderUseCase){
+        return  new PaymentConsumer(orderUseCase);
+    }
+
+
     public <T> JsonDeserializer<T> jsonDeserializer(JsonDeserializer<T> deserializer){
         deserializer.setRemoveTypeHeaders(false);
         deserializer.addTrustedPackages("*");

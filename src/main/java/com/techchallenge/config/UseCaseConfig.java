@@ -16,10 +16,6 @@ public class UseCaseConfig {
 		return new OrderUseCaseInteractor(orderGateway, customerGateway, productGateway);
 	}
 
-	@Bean
-	public PaymentConsumer paymentConsumer(OrderUseCase orderUseCase){
-		return  new PaymentConsumer(orderUseCase);
-	}
 
 	
 }
