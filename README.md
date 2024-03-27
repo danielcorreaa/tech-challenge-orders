@@ -22,7 +22,7 @@ Microsserviço responsável pelo gerenciamento de pedidos
 #### Checkout do pedido 
 
 ```http
-  POST api/v1/orders/checkout
+  POST orders/api/v1/checkout
 ```
 
 | Parâmetro   | Tipo       | Descrição                           |
@@ -34,7 +34,7 @@ Microsserviço responsável pelo gerenciamento de pedidos
 #### Buscar pedido 
 
 ```http
-  GET api/v1/orders/find/{id}
+  GET orders/api/v1/find/{id}
 ```
 
 | Parâmetro   | Tipo       | Descrição                           |
@@ -45,7 +45,7 @@ Microsserviço responsável pelo gerenciamento de pedidos
 #### Buscar todos os pedidos
 
 ```http
-  GET api/v1/orders
+  GET orders/api/v1
 ```
 | Parâmetro   | Tipo       |  Default|Descrição                                   |
 | :---------- | :--------- | :------------------------------------------ |:--- |
@@ -56,7 +56,7 @@ Microsserviço responsável pelo gerenciamento de pedidos
 #### Buscar todos os pedidos ordernados por data de criação, em que o status seja diferente de FINALIZADO
 
 ```http
-  GET api/v1/orders/sorted
+  GET orders/api/v1/sorted
 ```
 
 ## OWASP ZAP

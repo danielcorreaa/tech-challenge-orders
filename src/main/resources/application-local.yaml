@@ -19,10 +19,10 @@ spring:
 api:
   products:
     url: localhost:8082
-    path: api/v1/products/find
+    path: products/api/v1/find
   customers:
     url: localhost:8085
-    path: api/v1/customers/find
+    path: customers/api/v1/find
 kafka:
   topic:
     produce:

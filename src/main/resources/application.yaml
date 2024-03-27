@@ -18,10 +18,10 @@ spring:
 api:
   products:
     url: ${URL_PRODUCTS}
-    path: api/v1/products/find
+    path: products/api/v1/find
   customers:
     url: ${URL_CUSTOMERS}
-    path: api/v1/customers/find
+    path: customers/api/v1/find
 
 kafka:
   topic:

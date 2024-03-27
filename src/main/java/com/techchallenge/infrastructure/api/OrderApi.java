@@ -16,7 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/orders")
+@RequestMapping("orders/api/v1")
 @Tag(name = "Orders API")
 public class OrderApi {
 

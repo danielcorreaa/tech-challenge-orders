@@ -5,7 +5,7 @@ metadata:
   labels:
     app: orders
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: orders
   ports:
