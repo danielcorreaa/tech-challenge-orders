@@ -123,7 +123,7 @@ class OrderApiTest {
             Optional<String> jsonRequest = jsonUtils.toJson(request);
 
             MvcResult mvcResult = mockMvc
-                    .perform(post("/api/v1/orders/checkout")
+                    .perform(post("/orders/api/v1/checkout")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(jsonRequest.orElse(""))).andExpect(status().isBadRequest()).andReturn();
 
@@ -151,7 +151,7 @@ class OrderApiTest {
 
             Optional<String> jsonRequest = jsonUtils.toJson(request);
 
-            MvcResult mvcResult = mockMvc.perform(post("/api/v1/orders/checkout").contentType(MediaType.APPLICATION_JSON)
+            MvcResult mvcResult = mockMvc.perform(post("/orders/api/v1/checkout").contentType(MediaType.APPLICATION_JSON)
                     .content(jsonRequest.orElse(""))).andExpect(status().isCreated()).andReturn();
 
             Optional<Result<OrderResponse>> response = jsonUtils.parse(mvcResult.getResponse().getContentAsString(),
@@ -180,7 +180,7 @@ class OrderApiTest {
 
             Optional<String> jsonRequest = jsonUtils.toJson(request);
 
-            MvcResult mvcResult = mockMvc.perform(post("/api/v1/orders/checkout").contentType(MediaType.APPLICATION_JSON)
+            MvcResult mvcResult = mockMvc.perform(post("/orders/api/v1/checkout").contentType(MediaType.APPLICATION_JSON)
                     .content(jsonRequest.orElse(""))).andExpect(status().isNotFound()).andReturn();
 
             Optional<Result> response = jsonUtils.parse(mvcResult.getResponse().getContentAsString(),
@@ -206,7 +206,7 @@ class OrderApiTest {
 
             Optional<String> jsonRequest = jsonUtils.toJson(request);
 
-            MvcResult mvcResult = mockMvc.perform(post("/api/v1/orders/checkout").contentType(MediaType.APPLICATION_JSON)
+            MvcResult mvcResult = mockMvc.perform(post("/orders/api/v1/checkout").contentType(MediaType.APPLICATION_JSON)
                     .content(jsonRequest.orElse(""))).andExpect(status().isBadRequest()).andReturn();
 
             Optional<Result> response = jsonUtils.parse(mvcResult.getResponse().getContentAsString(),
@@ -236,7 +236,7 @@ class OrderApiTest {
 
             Optional<String> jsonRequest = jsonUtils.toJson(request);
 
-            MvcResult mvcResult = mockMvc.perform(post("/api/v1/orders/checkout").contentType(MediaType.APPLICATION_JSON)
+            MvcResult mvcResult = mockMvc.perform(post("/orders/api/v1/checkout").contentType(MediaType.APPLICATION_JSON)
                     .content(jsonRequest.orElse(""))).andExpect(status().isCreated()).andReturn();
 
             Optional<Result<OrderResponse>> response = jsonUtils.parse(mvcResult.getResponse().getContentAsString(),
@@ -265,7 +265,7 @@ class OrderApiTest {
 
             Optional<String> jsonRequest = jsonUtils.toJson(request);
 
-            MvcResult mvcResult = mockMvc.perform(post("/api/v1/orders/checkout").contentType(MediaType.APPLICATION_JSON)
+            MvcResult mvcResult = mockMvc.perform(post("/orders/api/v1/checkout").contentType(MediaType.APPLICATION_JSON)
                     .content(jsonRequest.orElse(""))).andExpect(status().isNotFound()).andReturn();
 
             Optional<Result<OrderResponse>> response = jsonUtils.parse(mvcResult.getResponse().getContentAsString(),
@@ -293,7 +293,7 @@ class OrderApiTest {
 
             Optional<String> jsonRequest = jsonUtils.toJson(request);
 
-            MvcResult mvcResult = mockMvc.perform(post("/api/v1/orders/checkout").contentType(MediaType.APPLICATION_JSON)
+            MvcResult mvcResult = mockMvc.perform(post("/orders/api/v1/checkout").contentType(MediaType.APPLICATION_JSON)
                     .content(jsonRequest.orElse(""))).andExpect(status().isBadRequest()).andReturn();
 
             Optional<Result<OrderResponse>> response = jsonUtils.parse(mvcResult.getResponse().getContentAsString(),
@@ -323,7 +323,7 @@ class OrderApiTest {
             OrderDocument orderDocument = orderEntityMapper.toOrderEntity(order);
             orderDocument.setId(orderId);
             when(orderRepository.findById(orderId)).thenReturn(Optional.of(orderDocument));
-            MvcResult mvcResult = mockMvc.perform(get("/api/v1/orders/find/" + orderId)
+            MvcResult mvcResult = mockMvc.perform(get("/orders/api/v1/find/" + orderId)
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk()).andReturn();
 
@@ -347,7 +347,7 @@ class OrderApiTest {
 
             when(orderRepository.findById(orderId)).thenReturn(Optional.empty());
 
-            MvcResult mvcResult = mockMvc.perform(get("/api/v1/orders/find/" + orderId)
+            MvcResult mvcResult = mockMvc.perform(get("/orders/api/v1/find/" + orderId)
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isNotFound()).andReturn();
 
@@ -376,7 +376,7 @@ class OrderApiTest {
 
             when(orderRepository.findAll(any(Pageable.class))).thenReturn(page);
 
-            MvcResult mvcResult = mockMvc.perform(get("/api/v1/orders?page=0&size=5")
+            MvcResult mvcResult = mockMvc.perform(get("/orders/api/v1?page=0&size=5")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk()).andReturn();
 
@@ -402,7 +402,7 @@ class OrderApiTest {
 
             when(orderRepository.findByStatusOrderAndDateOrderInit(any(Sort.class))).thenReturn(List.of(orderDocument));
 
-            MvcResult mvcResult = mockMvc.perform(get("/api/v1/orders/sorted")
+            MvcResult mvcResult = mockMvc.perform(get("/orders/api/v1/sorted")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk()).andReturn();
 

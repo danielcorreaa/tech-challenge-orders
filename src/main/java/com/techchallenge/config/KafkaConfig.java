@@ -8,7 +8,9 @@ import com.techchallenge.core.kafka.KafkaConsumerConfig;
 import com.techchallenge.core.kafka.KafkaProducerConfig;
 import com.techchallenge.core.kafka.produce.TopicProducer;
 import com.techchallenge.domain.entity.Order;
+import com.techchallenge.infrastructure.message.consumer.PaymentConsumer;
 import com.techchallenge.infrastructure.message.consumer.ProductionConsumer;
+import com.techchallenge.infrastructure.message.consumer.dto.MessagePaymentDto;
 import com.techchallenge.infrastructure.message.consumer.dto.StatusDto;
 import com.techchallenge.infrastructure.message.producer.OrderProduce;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,21 +32,39 @@ public class KafkaConfig {
     private String topic;
 
     @Value(value = "${kafka.topic.consumer.groupId}")
-    private String groupId;
+    private String groupIdProduction;
+
+    @Value(value = "${kafka.topic.consumer.error.groupId}")
+    private String groupIdPayment;
 
     @Bean
-    public KafkaConsumerConfig kafkaConsumerConfig(){
-        return new KafkaConsumerConfig(bootstrapAddress, groupId);
+    public KafkaConsumerConfig kafkaConsumerConfigProduction(){
+        return new KafkaConsumerConfig(bootstrapAddress, groupIdProduction);
+    }
+
+    @Bean
+    public KafkaConsumerConfig kafkaConsumerConfigPayment(){
+        return new KafkaConsumerConfig(bootstrapAddress, groupIdPayment);
     }
 
     @Bean
     public ConsumerFactory<String, StatusDto> consumerFactoryStatusDto(){
-        return kafkaConsumerConfig().consumerFactory(jsonDeserializer(new JsonDeserializer<>(StatusDto.class)));
+        return kafkaConsumerConfigProduction().consumerFactory(jsonDeserializer(new JsonDeserializer<>(StatusDto.class)));
     }
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, StatusDto> kafkaListenerContainerFactoryStatusDto(){
-        return kafkaConsumerConfig().kafkaListenerContainerFactory(consumerFactoryStatusDto());
+        return kafkaConsumerConfigProduction().kafkaListenerContainerFactory(consumerFactoryStatusDto());
+    }
+
+    @Bean
+    public ConsumerFactory<String, MessagePaymentDto> consumerFactoryPaymentDto(){
+        return kafkaConsumerConfigPayment().consumerFactory(jsonDeserializer(new JsonDeserializer<>(MessagePaymentDto.class)));
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, MessagePaymentDto> kafkaListenerContainerFactoryMessagePaymentDto(){
+        return kafkaConsumerConfigPayment().kafkaListenerContainerFactory(consumerFactoryPaymentDto());
     }
 
     @Bean
@@ -67,11 +87,6 @@ public class KafkaConfig {
         return new ProductionConsumer(orderUseCase);
     }
 
-    //@Bean
-    //public OrderProduce paymentProduce(MessageUseCase messageUseCase, OrderUseCase orderUseCase){
-        //return new OrderProduce(messageUseCase,orderUseCase);
-    //}
-
     @Bean
     public TopicProducer<Order> topicProducer(){
         return new TopicProducer<>(kafkaTemplateConfig(), topic);
@@ -81,6 +96,12 @@ public class KafkaConfig {
     public MessageUseCase messageUseCase(){
         return  new MessageUseCaseInteractor(topicProducer());
     }
+
+    @Bean
+    public PaymentConsumer paymentConsumer(OrderUseCase orderUseCase){
+        return  new PaymentConsumer(orderUseCase);
+    }
+
 
     public <T> JsonDeserializer<T> jsonDeserializer(JsonDeserializer<T> deserializer){
         deserializer.setRemoveTypeHeaders(false);

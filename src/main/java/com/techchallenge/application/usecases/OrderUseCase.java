@@ -15,4 +15,6 @@ public interface OrderUseCase {
 
 	List<Order> findOrdersNotSent();
 	void update(Order order);
+
+    void cancelOrder(String id);
 }

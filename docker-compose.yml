@@ -102,13 +102,17 @@ services:
       DB_NAME: customer
       DB_USERNAME: root
       DB_PASSWORD: dani
+      KAFKA_SERVERS: kafka:19092
     depends_on:
       - mysqldb
+      - kafka
     links:
       - mysqldb
+      - kafka
     networks:
       - ambiente-mysql
       - ambiente-app
+      - ambiente-kafka
 
   products:
     restart: always

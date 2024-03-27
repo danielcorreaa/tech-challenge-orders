@@ -62,6 +62,11 @@ public class Order {
 		}
 		return this;
 	}
+	public Order cancel() {
+		this.statusOrder = StatusOrder.CANCELADO;
+		this.dateOrderFinish = LocalDateTime.now();
+		return this;
+	}
 
 	public static final Order convert(String id, Customer customer, List<Product> products, LocalDateTime dateOrderInit,
 			LocalDateTime dateOrdernFinish, String statusOrder, Boolean sent) {
@@ -121,4 +126,6 @@ public class Order {
 		this.sent = Boolean.TRUE;
 		return this;
 	}
+
+
 }
