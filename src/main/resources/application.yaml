@@ -1,5 +1,7 @@
 server:
   port: 8082
+  servlet:
+    context-path: /tech-challenge-orders/
 spring:
   application:
     name: tech-challenge-orders
@@ -18,10 +20,11 @@ spring:
 api:
   products:
     url: ${URL_PRODUCTS}
-    path: api/v1/products/find
+    path: tech-challenge-product/products/api/v1/find
   customers:
     url: ${URL_CUSTOMERS}
-    path: api/v1/customers/find
+    path: tech-challenge-customer/customers/api/v1/find
+
 kafka:
   topic:
     produce:
@@ -30,6 +33,9 @@ kafka:
       groupId: production
       production:
         status: status.order
+      error:
+        payment: tech.error.payment
+        groupId: orders
 
 logging:
   level:
@@ -38,8 +44,8 @@ logging:
 
 swagger:
   title: Microserviço de Pedidos
+  version: 1.0
+  description: APi para cadastro e pesquisa de Pedidos
   contact:
+    name: Daniel A. Correa
     email: daniel.cor@outlook.com
-    name: Daniel Aleixo Correa
-    description: Microserviço desenvolvido para o curso de pós tech da FIAP
-    version: 1.0
