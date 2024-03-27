@@ -29,9 +29,9 @@ public class StepDefinition {
 
     OrderHelper helper = new OrderHelper();
 
-    private String ENDPOINT_ORDERS = "http://localhost:8085/orders/api/v1";
-    private String ENDPOINT_PRODUCTS = "http://localhost:8087/products/api/v1";
-    private String ENDPOINT_CUSTOMERS = "http://localhost:8083/customers/api/v1";
+    private String ENDPOINT_ORDERS = "http://localhost:8085/tech-challenge-orders/orders/api/v1";
+    private String ENDPOINT_PRODUCTS = "http://localhost:8087/tech-challenge-product/products/api/v1";
+    private String ENDPOINT_CUSTOMERS = "http://localhost:8083/tech-challenge-customer/customers/api/v1";
 
     @Dado("que quero inciar um pedido")
     public void que_quero_inciar_um_pedido() {
