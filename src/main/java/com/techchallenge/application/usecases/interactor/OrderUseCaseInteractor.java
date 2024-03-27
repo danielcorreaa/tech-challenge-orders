@@ -62,6 +62,12 @@ public class OrderUseCaseInteractor implements OrderUseCase {
 		orderGateway.update(order);
 	}
 
+	@Override
+	public void cancelOrder(String id) {
+		Order order = findById(id).cancel();
+		orderGateway.update(order);
+	}
+
 	public Order findById(String id) {
 		return orderGateway.findbyId(id).orElseThrow(() -> new NotFoundException("Order not found!"));
 	}
